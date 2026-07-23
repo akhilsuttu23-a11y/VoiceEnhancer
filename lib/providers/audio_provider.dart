@@ -18,9 +18,9 @@ class AudioProvider extends ChangeNotifier {
   String _statusMessage = 'Initializing...';
   
   // Audio processing parameters
-  double _noiseThreshold = 0.02;
-  int _smoothFactor = 3;
-  bool _enableSmoothing = true;
+  double _noiseThreshold = 0.01;
+  int _smoothFactor = 1;
+  bool _enableSmoothing = false;
   bool _enableCompression = true;
   bool _enableHighPass = true;
   
@@ -122,7 +122,7 @@ class AudioProvider extends ChangeNotifier {
         toFile: _tempFilePath,
         codec: Codec.pcm16,
         numChannels: 1,
-        sampleRate: 16000,
+        sampleRate: 44100, // Updated to 44.1kHz for crystal clear sound
       );
 
       _processingTimer = Timer.periodic(
@@ -162,6 +162,7 @@ class AudioProvider extends ChangeNotifier {
         enableSmoothing: _enableSmoothing,
         enableCompression: _enableCompression,
         enableHighPass: _enableHighPass,
+        sampleRate: 44100.0,
       );
       
       if (_isPlaying && processed.isNotEmpty) {
